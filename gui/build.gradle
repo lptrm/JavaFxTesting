@@ -12,12 +12,11 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 dependencies {
-    implementation project(path: ':api')
-    implementation project(path: ':api')
-    implementation project(path: ':base')
+    implementation project(':api')
+    implementation project(':base')
 }
 application {
     // Define the main class for the application.
-    mainModule = 'de.hhn.it.jobernberg.gui.main'
+    mainModule = 'JavaFxTesting.gui.main'
     mainClass = 'de.hhn.it.jobernberg.gui.FxHelloWorld'
 }
