@@ -15,6 +15,13 @@ dependencies {
     implementation project(':api')
     implementation project(':base')
 }
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
 application {
     // Define the main class for the application.
     mainModule = 'JavaFxTesting.gui.main'

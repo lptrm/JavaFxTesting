@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 import java.util.ServiceLoader;
 
 public class FxTest extends Application {
@@ -24,6 +26,7 @@ public class FxTest extends Application {
   public void start(Stage primaryStage) {
     GreetingGenerator generator = loadServiceProvider();
     String greeting = generator.getGreeting("World");
+
 
     primaryStage.setTitle("Hello World!");
 
@@ -62,40 +65,23 @@ public class FxTest extends Application {
     grid.add(greetingLabel, 0, 4);
 
     Button openNewWindowButton = new Button("Open New Window");
-    openNewWindowButton.setOnAction(e -> openNewWindow());
+    openNewWindowButton.setOnAction(e -> new FxTestFXML());
     grid.add(openNewWindowButton, 0, 5);
 
 
     StackPane root = new StackPane();
     root.getChildren().add(grid);
 
-    Scene scene = new Scene(root, 300, 200);
+    Scene scene = new Scene(root, 600, 400);
     primaryStage.setScene(scene);
     try{
-      scene.getStylesheets().add(FxTest.class.getResource("/Test.css").toExternalForm());
+      scene.getStylesheets().add(Objects.requireNonNull(FxTest.class.getResource("/Test.css")).toExternalForm());
     } catch (Exception e){
       System.out.println("CSS not found");
     }
 
-
+    primaryStage.setScene(scene);
     primaryStage.show();
-  }
-  private void openNewWindow() {
-    Stage newStage = new Stage();
-    newStage.setTitle("FXML Welcome");
-    Parent root;
-    try {
-      root = new FXMLLoader().load(getClass().getResourceAsStream("/fxml/welcome.fxml"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    Button closeButton = new Button("Close New Window");
-    closeButton.setOnAction(e -> newStage.close());
-
-    StackPane newRoot = new StackPane(closeButton);
-    newStage.setScene(new Scene(newRoot, 300, 200));
-    newStage.show();
   }
   GreetingGenerator loadServiceProvider() {
     ServiceLoader<GreetingGenerator> loader = ServiceLoader.load(GreetingGenerator.class);
